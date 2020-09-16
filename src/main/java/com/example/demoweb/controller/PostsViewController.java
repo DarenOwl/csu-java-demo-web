@@ -4,10 +4,9 @@ import com.example.demoweb.service.PostService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.Date;
 
 @Controller
 public class PostsViewController {
@@ -25,5 +24,17 @@ public class PostsViewController {
     @RequestMapping(path = "/post/{id}", method = RequestMethod.GET)
     public String single(@PathVariable("id") Long id) {
         return "Здесь будет страница поста #" + id;
+    }
+
+    @RequestMapping(path = "/new", method = RequestMethod.GET)
+    public String create(Model model) {
+        model.addAttribute("pageName", "Новый пост");
+        return "create";
+    }
+
+    @RequestMapping(path = "/new", method = RequestMethod.POST)
+    public String doCreate(@ModelAttribute("text") String text) {
+        postService.create(text, new Date());
+        return "redirect:/";
     }
 }
