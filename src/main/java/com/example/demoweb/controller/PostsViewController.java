@@ -6,8 +6,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Date;
-
 @Controller
 public class PostsViewController {
     @Autowired
@@ -34,7 +32,7 @@ public class PostsViewController {
 
     @RequestMapping(path = "/new", method = RequestMethod.POST)
     public String doCreate(@ModelAttribute("text") String text) {
-        postService.create(text, new Date());
+        postService.create(text);
         return "redirect:/";
     }
 }
